@@ -45,7 +45,7 @@ pipeline {
                           docker build -t gcr.io/devops-259416/frontend:3  -f ./microservices-demo/src/frontend/Dockerfile ./microservices-demo/src/frontend/
                           docker push gcr.io/devops-259416/frontend:3
 
-                          docker build -t gcr.io/devops-259416/adservice:3  -f ./microservices-demo/src/paymentservice/Dockerfile ./microservices-demo/src/paymentservice/
+                          docker build -t gcr.io/devops-259416/paymentservice:3  -f ./microservices-demo/src/paymentservice/Dockerfile ./microservices-demo/src/paymentservice/
                           docker push gcr.io/devops-259416/paymentservice:3
                         """
                 //}
