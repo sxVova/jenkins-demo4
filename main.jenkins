@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo " ============== start testing linter =================="
                          sh """
-                         wget https://github.com/checkstyle/checkstyle/archive/checkstyle-8.30.tar.gz
+                         wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.30/checkstyle-8.30-all.jar
                          java -jar checkstyle-8.30-all.jar -c /google_checks.xml ./microservices-demo/src/adservice/*
                          java -jar checkstyle-8.30-all.jar -c /sun_checks.xml ./microservices-demo/src/adservice/*
                          rm checkstyle-8.30-all.jar
