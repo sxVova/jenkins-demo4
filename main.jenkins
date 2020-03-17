@@ -51,13 +51,17 @@ pipeline {
                 //}
             }
         }
-
-        stage("deploy ansible") {
+        stage("deploy k8s") {
             steps {
-                echo " ============== Make ansible deploy =================="
-                        sh """
-
-                        """
+                echo " ============== Make k8s deploy =================="
+                step([$class: 'KubernetesEngineBuilder',
+                  projectId: "devops-259416",
+                  clusterName: "staging",
+                  location: "us-central1-c",
+                  manifestPattern: 'microservices-demo/release/kubernetes-manifests.yaml',
+                  credentialsId: "gke",
+                  verifyDeployments: true])
+      }
             }
         }
     }
