@@ -1,0 +1,57 @@
+#!groovy
+// Run docker build
+
+properties([disableConcurrentBuilds()])
+
+pipeline {
+    agent {
+        label 'master'
+        }
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '1', artifactNumToKeepStr: '1'))
+        timestamps()
+    }
+    stages {
+    stage("clone") {
+            steps {
+                echo " ============== git clone repo =================="
+                        sh """
+                              git clone https://github.com/sxVova/microservices-demo.git .
+                        """
+            }
+        }
+	stage("test linter") {
+            steps {
+                echo " ============== start testing linter =================="
+                         sh """
+                         wget https://github.com/checkstyle/checkstyle/archive/checkstyle-8.30.tar.gz
+                         java -jar checkstyle-8.30-all.jar -c /google_checks.xml ./src/adservice/*
+                         java -jar checkstyle-8.30-all.jar -c /sun_checks.xml ./src/adservice/*
+                         rm checkstyle-8.30-all.jar
+                         """
+            }
+        }
+	stage("create docker image") {
+            steps {
+                echo " ============== start building image =================="
+                //withCredentials([usernamePassword(credentialsId: 'gitlab_prod', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        sh """
+                          echo "y" | gcloud auth configure-docker
+                          gcloud auth activate-service-account --key-file /key.json
+                          docker build -t gcr.io/devops-259416/adservice:2  -f ./src/adservice/Dockerfile ./src/adservice/
+                          docker push gcr.io/devops-259416/adservice:2
+                        """
+                //}
+            }
+        }
+
+        stage("deploy ansible") {
+            steps {
+                echo " ============== Make ansible deploy =================="
+                        sh """
+
+                        """
+            }
+        }
+    }
+}
