@@ -38,8 +38,15 @@ pipeline {
                         sh """
                           echo "y" | gcloud auth configure-docker
                           gcloud auth activate-service-account --key-file /key.json
+
                           docker build -t gcr.io/devops-259416/adservice:3  -f ./microservices-demo/src/adservice/Dockerfile ./microservices-demo/src/adservice/
                           docker push gcr.io/devops-259416/adservice:3
+
+                          docker build -t gcr.io/devops-259416/frontend:3  -f ./microservices-demo/src/frontend/Dockerfile ./microservices-demo/src/frontend/
+                          docker push gcr.io/devops-259416/frontend:3
+
+                          docker build -t gcr.io/devops-259416/adservice:3  -f ./microservices-demo/src/paymentservice/Dockerfile ./microservices-demo/src/paymentservice/
+                          docker push gcr.io/devops-259416/paymentservice:3
                         """
                 //}
             }
