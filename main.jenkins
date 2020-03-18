@@ -28,6 +28,7 @@ pipeline {
                          # java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./src/adservice/*
 
                          export GOROOT=/usr/local/go
+                         echo "$GOROOT"
                          export GOPATH=~/workspace/demo4/go
                          export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
                          go get -u golang.org/x/lint/golint
