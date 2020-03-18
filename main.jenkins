@@ -29,7 +29,7 @@ pipeline {
 
                          env.GOROOT = /usr/local/go
                          env.GOPATH = ~/workspace/demo4/go
-                         env.PATH = $GOPATH/bin:$GOROOT/bin:$PATH
+                    #     env.PATH = $GOPATH/bin:$GOROOT/bin:$PATH
                          go get -u golang.org/x/lint/golint
 
                 #         golint ./src/frontend/
