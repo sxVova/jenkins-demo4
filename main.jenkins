@@ -68,7 +68,7 @@ pipeline {
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
-                          kubectl apply -f ./microservices-demo/release/kubernetes-manifests.yaml
+                          kubectl apply -f ./release/kubernetes-manifests.yaml
                         """
             }
         }
