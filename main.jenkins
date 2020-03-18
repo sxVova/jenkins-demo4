@@ -24,18 +24,18 @@ pipeline {
                 echo " ============== start testing linters =================="
                          sh """
 
-                         # java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./microservices-demo/src/adservice/*
-                         # java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./microservices-demo/src/adservice/*
+                         # java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./src/adservice/*
+                         # java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./src/adservice/*
 
                          export GOROOT=/usr/local/go
                          export GOPATH=~/workspace/demo4/go
                          export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
                          go get -u golang.org/x/lint/golint
 
-                         golint ./microservices-demo/src/shippingservice/
-                         golint ./microservices-demo/src/frontend/
-                         golint ./microservices-demo/src/productcatalogservice/
-                         golint ./microservices-demo/src/checkoutservice/
+                         golint ./src/shippingservice/
+                         golint ./src/frontend/
+                         golint ./src/productcatalogservice/
+                         golint ./src/checkoutservice/
 
                          """
               echo " ============== end testing linters =================="
@@ -49,13 +49,13 @@ pipeline {
                           echo "y" | gcloud auth configure-docker
                           gcloud auth activate-service-account --key-file /key.json
 
-                          docker build -t gcr.io/devops-259416/adservice:3  -f ./microservices-demo/src/adservice/Dockerfile ./microservices-demo/src/adservice/
+                          docker build -t gcr.io/devops-259416/adservice:3  -f ./src/adservice/Dockerfile ./src/adservice/
                           docker push gcr.io/devops-259416/adservice:3
 
-                          docker build -t gcr.io/devops-259416/frontend:3  -f ./microservices-demo/src/frontend/Dockerfile ./microservices-demo/src/frontend/
+                          docker build -t gcr.io/devops-259416/frontend:3  -f ./src/frontend/Dockerfile ./src/frontend/
                           docker push gcr.io/devops-259416/frontend:3
 
-                          docker build -t gcr.io/devops-259416/paymentservice:3  -f ./microservices-demo/src/paymentservice/Dockerfile ./microservices-demo/src/paymentservice/
+                          docker build -t gcr.io/devops-259416/paymentservice:3  -f ./src/paymentservice/Dockerfile ./src/paymentservice/
                           docker push gcr.io/devops-259416/paymentservice:3
                         """
                 //}
@@ -73,13 +73,13 @@ pipeline {
         //                 """
         //     }
         // }
-        stage("Remove repository") {
-            steps {
-                echo " ============== Remove microservice repository =================="
-                        sh """
-                          rm -rf microservices-demo/
-                        """
-            }
-        }
+        // stage("Remove repository") {
+        //     steps {
+        //         echo " ============== Remove microservice repository =================="
+        //                 sh """
+        //                   rm -rf *
+        //                 """
+        //     }
+        // }
     }
 }
