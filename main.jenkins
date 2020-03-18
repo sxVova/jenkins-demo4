@@ -21,7 +21,7 @@ pipeline {
         }
 	stage("test linter") {
             steps {
-                echo " ============== start testing linter =================="
+                echo " ============== start testing linters =================="
                          sh """
 
                          # java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./microservices-demo/src/adservice/*
@@ -30,12 +30,14 @@ pipeline {
                          export GOROOT=/usr/local/go
                          export GOPATH=~/workspace/demo4/go
                          export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+
                          golint ./microservices-demo/src/shippingservice/
                          golint ./microservices-demo/src/frontend/
                          golint ./microservices-demo/src/productcatalogservice/
                          golint ./microservices-demo/src/checkoutservice/
 
                          """
+              echo " ============== end testing linters =================="
             }
         }
 	stage("create docker image") {
