@@ -32,10 +32,9 @@ pipeline {
                          export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
                          go get -u golang.org/x/lint/golint
 
-                         golint ./src/shippingservice/
-                         golint ./src/frontend/
-                         golint ./src/productcatalogservice/
-                         golint ./src/checkoutservice/
+                #         golint ./src/frontend/
+                #         golint ./src/productcatalogservice/
+                #         golint ./src/checkoutservice/
 
                          """
               echo " ============== end testing linters =================="
