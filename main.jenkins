@@ -27,6 +27,9 @@ pipeline {
                          # java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./microservices-demo/src/adservice/*
                          # java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./microservices-demo/src/adservice/*
 
+                         export GOROOT=/usr/local/go
+                         export GOPATH=~/workspace/demo4/go
+                         export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
                          golint ./microservices-demo/src/shippingservice/
                          golint ./microservices-demo/src/frontend/
                          golint ./microservices-demo/src/productcatalogservice/
