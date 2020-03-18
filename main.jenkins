@@ -8,7 +8,7 @@ pipeline {
         label 'master'
         }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '1', artifactNumToKeepStr: '1'))
+        //buildDiscarder(logRotator(numToKeepStr: '1', artifactNumToKeepStr: '1'))
         timestamps()
     }
     stages {
@@ -30,6 +30,7 @@ pipeline {
                          export GOROOT=/usr/local/go
                          export GOPATH=~/workspace/demo4/go
                          export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+                         go get -u golang.org/x/lint/golint
 
                          golint ./microservices-demo/src/shippingservice/
                          golint ./microservices-demo/src/frontend/
