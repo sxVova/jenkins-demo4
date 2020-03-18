@@ -51,17 +51,17 @@ pipeline {
                 //}
             }
         }
+
         stage("deploy k8s") {
             steps {
                 echo " ============== Make k8s deploy =================="
-                step([$class: 'KubernetesEngineBuilder',
-                  projectId: "devops-259416",
-                  clusterName: "demo",
-                  location: "us-central1-a",
-                  manifestPattern: 'microservices-demo/release/kubernetes-manifests.yaml',
-                  credentialsId: "gke",
-                  verifyDeployments: true])
-      }
+                        sh """
+                          gcloud config set project devops-259416
+                          export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
+                          gcloud container clusters get-credentials demo --zone us-central1-a
+                          kubectl apply -f ./microservices-demo/release/kubernetes-manifests.yaml
+                        """
             }
         }
+    }
 }
