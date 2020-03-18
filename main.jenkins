@@ -15,19 +15,23 @@ pipeline {
     stage("clone") {
             steps {
                 echo " ============== git clone repo =================="
-                        sh """
-                              git clone https://github.com/sxVova/microservices-demo.git
-                        """
+                git branch: 'master',
+                url: 'https://github.com/sxVova/microservices-demo.git'
             }
         }
 	stage("test linter") {
             steps {
                 echo " ============== start testing linter =================="
                          sh """
-                         wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.30/checkstyle-8.30-all.jar
-                         java -jar checkstyle-8.30-all.jar -c /google_checks.xml ./microservices-demo/src/adservice/*
-                         # java -jar checkstyle-8.30-all.jar -c /sun_checks.xml ./microservices-demo/src/adservice/*
-                         rm checkstyle-8.30-all.jar
+
+                         java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./microservices-demo/src/adservice/*
+                         # java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./microservices-demo/src/adservice/*
+
+                         golint ./microservices-demo/src/shippingservice/
+                         golint ./microservices-demo/src/frontend/
+                         golint ./microservices-demo/src/productcatalogservice/
+                         golint ./microservices-demo/src/checkoutservice/
+
                          """
             }
         }
@@ -52,14 +56,22 @@ pipeline {
             }
         }
 
-        stage("deploy k8s") {
+        // stage("deploy k8s") {
+        //     steps {
+        //         echo " ============== Make k8s deploy =================="
+        //                 sh """
+        //                   gcloud config set project devops-259416
+        //                   export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
+        //                   gcloud container clusters get-credentials demo --zone us-central1-a
+        //                   kubectl apply -f ./microservices-demo/release/kubernetes-manifests.yaml
+        //                 """
+        //     }
+        // }
+        stage("Remove repository") {
             steps {
-                echo " ============== Make k8s deploy =================="
+                echo " ============== Remove microservice repository =================="
                         sh """
-                          gcloud config set project devops-259416
-                          export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
-                          gcloud container clusters get-credentials demo --zone us-central1-a
-                          kubectl apply -f ./microservices-demo/release/kubernetes-manifests.yaml
+                          rm -rf microservices-demo/
                         """
             }
         }
