@@ -36,7 +36,7 @@ pipeline {
                          golint ./src/productcatalogservice/
                          golint ./src/checkoutservice/
 
-                         pep8 ./src/emailservice/
+                        # pep8 ./src/emailservice/
                          """
               echo " ============== end testing linters =================="
             }
