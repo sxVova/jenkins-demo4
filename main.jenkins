@@ -40,8 +40,8 @@ pipeline {
                         sh "python -m flake8 --statistics --count src/"
                   }
                   catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
-                        sh 'eslint  --no-eslintrc "src/paymentservice/**.js'
-                        sh 'eslint  --no-eslintrc "src/currencyservice/**.js'
+                        sh 'eslint  --no-eslintrc "src/paymentservice/**.js"'
+                        sh 'eslint  --no-eslintrc "src/currencyservice/**.js"'
                   }
               echo " ============== end testing linters =================="
             }
