@@ -20,6 +20,7 @@ pipeline {
                 echo " ============== git clone repo =================="
                 git branch: 'master',
                 url: 'https://github.com/sxVova/microservices-demo.git'
+                sh "export GIT_COMMIT1 = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)"
             }
         }
 	stage("test linter") {
@@ -72,6 +73,8 @@ pipeline {
                         sh """
                           # bash ./tag-changer
                           echo "${env.GIT_COMMIT_HASH}"
+                          echo "${env.GIT_COMMIT1}"
+                          echo "${GIT_COMMIT}"
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
