@@ -11,16 +11,13 @@ pipeline {
         //buildDiscarder(logRotator(numToKeepStr: '1', artifactNumToKeepStr: '1'))
         timestamps()
     }
-    environment{
-      GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
-    }
     stages {
     stage("clone") {
             steps {
                 echo " ============== git clone repo =================="
                 git branch: 'master',
                 url: 'https://github.com/sxVova/microservices-demo.git'
-                sh 'export GIT_COMMIT = $(git log -n 1 --pretty=format:"%H")'
+                sh 'export GIT_COMMIT_MICRO = $(git log -n 1 --pretty=format:"%H")'
             }
         }
 	stage("test linter") {
@@ -72,9 +69,7 @@ pipeline {
                 echo " ============== Make k8s deploy =================="
                         sh """
                           # bash ./tag-changer
-                          echo "${env.GIT_COMMIT_HASH}"
-                          echo "${env.GIT_COMMIT1}"
-                          echo "${GIT_COMMIT}"
+                          echo "${env.GIT_COMMIT_MICRO}"
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
