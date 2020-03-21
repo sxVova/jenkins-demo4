@@ -71,7 +71,7 @@ pipeline {
                 echo " ============== Make k8s deploy =================="
                         sh """
                           # bash ./tag-changer
-                          echo env.GIT_COMMIT_HASH
+                          echo "${env.GIT_COMMIT_HASH}"
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
