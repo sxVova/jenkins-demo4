@@ -35,9 +35,10 @@ pipeline {
                          golint ./src/frontend/
                          golint ./src/productcatalogservice/
                          golint ./src/checkoutservice/
-
-                        # pep8 ./src/emailservice/
                          """
+                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                        sh "python -m flake8 --statistics --count src/"
+                  }
               echo " ============== end testing linters =================="
             }
         }
@@ -66,6 +67,7 @@ pipeline {
             steps {
                 echo " ============== Make k8s deploy =================="
                         sh """
+                          # bash ./tag-changer "$TAG"
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
