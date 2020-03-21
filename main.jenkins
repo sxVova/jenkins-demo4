@@ -17,7 +17,10 @@ pipeline {
                 echo " ============== git clone repo =================="
                 git branch: 'master',
                 url: 'https://github.com/sxVova/microservices-demo.git'
-                bash 'export GIT_COMMIT_MICRO = $(git log -n 1 --pretty=format:"%H")'
+                sh '''
+                GIT_COMMIT_MICRO = $(git log -n 1 --pretty=format:"%H")
+                export GIT_COMMIT_MICRO
+                '''
             }
         }
 	stage("test linter") {
