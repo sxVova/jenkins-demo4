@@ -46,7 +46,9 @@ pipeline {
             steps {
                 echo " ============== start building image =================="
                 //withCredentials([usernamePassword(credentialsId: 'gitlab_prod', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        sh """
+                        sh '''
+                          GIT_COMMIT_MICRO=$(git log -n 1 --pretty=format:"%H" | cut -c -8 )
+
                           echo "y" | gcloud auth configure-docker
                           gcloud auth activate-service-account --key-file /key.json
 
@@ -58,7 +60,7 @@ pipeline {
 
                           docker build -t gcr.io/devops-259416/paymentservice:3  -f ./src/paymentservice/Dockerfile ./src/paymentservice/
                           docker push gcr.io/devops-259416/paymentservice:3
-                        """
+                        '''
                 //}
             }
         }
@@ -67,10 +69,9 @@ pipeline {
             steps {
                 echo " ============== Make k8s deploy =================="
                         sh '''
-                          # bash ./tag-changer
                           GIT_COMMIT_MICRO=$(git log -n 1 --pretty=format:"%H")
+                          # bash ./tag-changer "${GIT_COMMIT_MICRO}"
 
-                          echo "${GIT_COMMIT_MICRO}"
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
