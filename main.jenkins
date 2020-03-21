@@ -70,7 +70,7 @@ pipeline {
                           # bash ./tag-changer
                           sh 'GIT_COMMIT_MICRO=$(git log -n 1 --pretty=format:"%H")'
 
-                          echo "$GIT_COMMIT_MICRO"
+                          echo "${GIT_COMMIT_MICRO}"
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
