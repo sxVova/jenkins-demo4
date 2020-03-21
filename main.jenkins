@@ -39,13 +39,16 @@ pipeline {
                   catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                         sh "python -m flake8 --statistics --count src/"
                   }
+                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                        sh 'eslint  --no-eslintrc "src/paymentservice/**.js'
+                        sh 'eslint  --no-eslintrc "src/currencyservice/**.js'
+                  }
               echo " ============== end testing linters =================="
             }
         }
 	stage("create docker image") {
             steps {
                 echo " ============== start building image =================="
-                //withCredentials([usernamePassword(credentialsId: 'gitlab_prod', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                         sh '''
                           GIT_COMMIT_MICRO=$(git log -n 1 --pretty=format:"%H" | cut -c -8 )
 
@@ -60,8 +63,39 @@ pipeline {
 
                           docker build -t gcr.io/devops-259416/paymentservice:3  -f ./src/paymentservice/Dockerfile ./src/paymentservice/
                           docker push gcr.io/devops-259416/paymentservice:3
-                        '''
-                //}
+                          '''
+                          // docker build -t gcr.io/devops-259416/adservice:"${GIT_COMMIT_MICRO}"  -f ./src/adservice/Dockerfile ./src/adservice/
+                          // docker push gcr.io/devops-259416/adservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/cartservice:"${GIT_COMMIT_MICRO}"  -f ./src/cartservice/Dockerfile ./src/cartservice/
+                          // docker push gcr.io/devops-259416/cartservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/checkoutservice:"${GIT_COMMIT_MICRO}"  -f ./src/checkoutservice/Dockerfile ./src/checkoutservice/
+                          // docker push gcr.io/devops-259416/checkoutservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/currencyservice:"${GIT_COMMIT_MICRO}"  -f ./src/currencyservice/Dockerfile ./src/currencyservice/
+                          // docker push gcr.io/devops-259416/currencyservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/emailservice:"${GIT_COMMIT_MICRO}"  -f ./src/emailservice/Dockerfile ./src/emailservice/
+                          // docker push gcr.io/devops-259416/emailservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/frontend:"${GIT_COMMIT_MICRO}"  -f ./src/frontend/Dockerfile ./src/frontend/
+                          // docker push gcr.io/devops-259416/frontend:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/loadgenerator:"${GIT_COMMIT_MICRO}"  -f ./src/loadgenerator/Dockerfile ./src/loadgenerator/
+                          // docker push gcr.io/devops-259416/loadgenerator:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/paymentservice:"${GIT_COMMIT_MICRO}"  -f ./src/paymentservice/Dockerfile ./src/paymentservice/
+                          // docker push gcr.io/devops-259416/paymentservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/productcatalogservice:"${GIT_COMMIT_MICRO}"  -f ./src/productcatalogservice/Dockerfile ./src/productcatalogservice/
+                          // docker push gcr.io/devops-259416/productcatalogservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/recommendationservice:"${GIT_COMMIT_MICRO}"  -f ./src/recommendationservice/Dockerfile ./src/recommendationservice/
+                          // docker push gcr.io/devops-259416/recommendationservice:"${GIT_COMMIT_MICRO}"
+                          //
+                          // docker build -t gcr.io/devops-259416/shippingservice:"${GIT_COMMIT_MICRO}"  -f ./src/shippingservice/Dockerfile ./src/shippingservice/
+                          // docker push gcr.io/devops-259416/shippingservice:"${GIT_COMMIT_MICRO}"
             }
         }
 
@@ -69,7 +103,7 @@ pipeline {
             steps {
                 echo " ============== Make k8s deploy =================="
                         sh '''
-                          GIT_COMMIT_MICRO=$(git log -n 1 --pretty=format:"%H")
+                          GIT_COMMIT_MICRO=$(git log -n 1 --pretty=format:"%H" | cut -c -8 )
                           # bash ./tag-changer "${GIT_COMMIT_MICRO}"
 
                           gcloud config set project devops-259416
