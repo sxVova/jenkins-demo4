@@ -11,6 +11,9 @@ pipeline {
         //buildDiscarder(logRotator(numToKeepStr: '1', artifactNumToKeepStr: '1'))
         timestamps()
     }
+    environment{
+      GIT_COMMIT_HASH = sh (script: "git log -n 1 --pretty=format:'%H'", returnStdout: true)
+    }
     stages {
     stage("clone") {
             steps {
@@ -67,7 +70,8 @@ pipeline {
             steps {
                 echo " ============== Make k8s deploy =================="
                         sh """
-                          # bash ./tag-changer "$TAG"
+                          # bash ./tag-changer
+                          echo env.GIT_COMMIT_HASH
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
