@@ -16,7 +16,7 @@ pipeline {
             steps {
                 echo " ============== git clone repo =================="
                 git branch: 'master',
-                url: 'https://github.com/sxVova/microservices-demo.git'
+                url: 'https://gitlab.sxvova.opensource-ukraine.org/root/microservices-demo.git'
             }
         }
 	stage("test linter") {
