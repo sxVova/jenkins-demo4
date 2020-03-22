@@ -25,7 +25,7 @@ pipeline {
 
                          # java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./src/adservice/*
                          # java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./src/adservice/*
-
+                         slepp 1
                          export GOROOT=/usr/local/go
                          export GOPATH=/var/lib/jenkins/workspace/demo4/go
                          export PATH=/usr/local/go/bin:/var/lib/jenkins/workspace/demo4/go/bin:$PATH
