@@ -105,9 +105,9 @@ pipeline {
 
                          # kubectl create namespace cert-manager
                           kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.0/cert-manager-legacy.yaml
-                          kubectl create clusterrolebinding cluster-admin-binding \
-                            --clusterrole=cluster-admin \
-                            --user=$(gcloud config get-value core/account)
+                        #  kubectl create clusterrolebinding cluster-admin-binding \
+                         #   --clusterrole=cluster-admin \
+                         #   --user=$(gcloud config get-value core/account)
 
                           kubectl create secret generic k8s-service-account --from-file=/key.json -n cert-manager
                           sleep 30
