@@ -113,7 +113,7 @@ pipeline {
                         sh 'kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.0/cert-manager-legacy.yaml'
                         
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
-                            sh 'kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account'
+                            sh 'kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account)'
                         }
                         
                         catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
