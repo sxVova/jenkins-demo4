@@ -21,10 +21,13 @@ pipeline {
 	stage("linter_tests") {
             steps {
                 echo " ============== start testing linters =================="
+                
+                catchError(buildResult: 'SUCCESS', stageResult: 'Check java code'){
+                        sh "java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./src/adservice/*"
+                  }
                 sh """
 
-                         # java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./src/adservice/*
-                         # java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./src/adservice/*
+                         java -jar /checkstyle-8.30-all.jar -c /google_checks.xml ./src/adservice/*
                          export GOROOT=/usr/local/go
                          export GOPATH=/var/lib/jenkins/workspace/demo4/go
                          export PATH=/usr/local/go/bin:/var/lib/jenkins/workspace/demo4/go/bin:$PATH
@@ -34,14 +37,14 @@ pipeline {
                          golint ./src/productcatalogservice/
                          golint ./src/checkoutservice/
                          """
-                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                  catchError(buildResult: 'SUCCESS', stageResult: 'Check python code'){
                         sh "python -m flake8 --statistics --count src/"
                   }
 
-                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                  catchError(buildResult: 'SUCCESS', stageResult: 'Check js code'){
                         sh 'eslint  --no-eslintrc "src/paymentservice/**.js"'
                   }
-                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
+                  catchError(buildResult: 'SUCCESS', stageResult: 'Check js code'){
                         sh 'eslint  --no-eslintrc "src/currencyservice/**.js"'
                   }
               echo " ============== end testing linters =================="
