@@ -23,31 +23,31 @@ in the manifest file. This path should be "hostname"/"project-id"/"image":"${GIT
 
 ## Requirements
 1. google-cloud-sdk
-`echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list`
-`sudo apt-get install apt-transport-https ca-certificates gnupg`
-`curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -`
-`sudo apt-get update && sudo apt-get install google-cloud-sdk`
+`echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list`  
+`sudo apt-get install apt-transport-https ca-certificates gnupg`  
+`curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -`  
+`sudo apt-get update && sudo apt-get install google-cloud-sdk`  
 1. kubectl  
-`sudo apt install kubectl -y`
+`sudo apt install kubectl -y`  
 1. nodejs   
-`curl -sL https://deb.nodesource.com/setup_10.x | bash`
-`sudo apt install nodejs -y`
+`curl -sL https://deb.nodesource.com/setup_10.x | bash`  
+`sudo apt install nodejs -y`  
 1. eslint   
-`npm i -g eslint`
-1. go
-`curl -O https://storage.googleapis.com/golang/go1.12.9.linux-amd64.tar.gz`
-`tar -xvf go1.12.9.linux-amd64.tar.gz`
-`sudo chown -R jenkins:jenkins ./go`
-`sudo mv go /usr/local`
+`npm i -g eslint`  
+1. go  
+`curl -O https://storage.googleapis.com/golang/go1.12.9.linux-amd64.tar.gz`  
+`tar -xvf go1.12.9.linux-amd64.tar.gz`  
+`sudo chown -R jenkins:jenkins ./go`  
+`sudo mv go /usr/local`  
 1. python   
-`sudo apt install python -y`
+`sudo apt install python -y`  
 1. pip      
-`sudo apt install python-pip -y`
+`sudo apt install python-pip -y`  
 1. flake8   
-`pip install flake8`
-1. Java linter  
-`wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.30/checkstyle-8.30-all.jar` 
-`mv ./checkstyle-8.30-all.jar /`
+`pip install flake8`  
+1. Java linter    
+`wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.30/checkstyle-8.30-all.jar`   
+`mv ./checkstyle-8.30-all.jar /`  
 ## IAM
 In order to execute this module you must have a Service Account with the following roles:
 
