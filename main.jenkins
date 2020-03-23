@@ -109,7 +109,7 @@ pipeline {
                          #   --clusterrole=cluster-admin \
                          #   --user=$(gcloud config get-value core/account)
 
-                          kubectl create secret generic k8s-service-account --from-file=/key.json -n cert-manager
+                         # kubectl create secret generic k8s-service-account --from-file=/key.json -n cert-manager
                           sleep 30
                           kubectl apply -f ./cert.yaml
 
