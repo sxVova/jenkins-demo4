@@ -7,7 +7,7 @@ This Jenkinsfile contains a pipeline for CI/CD for a microservice application.
 |-------------------------|----------------------------------------------------|
 | `git_clone`             | Clone git repository with microservices.           |
 | `linter_tests `         | Run linter tests for such programming languages as: **Java**, **Go**, **Python** and **JavaScript**.  All tests that raise errors are wrapped in *catchError* blocks.|
-| `create_docker_images`  | Collects all *docker images*, gives them a tag (hash of a commit) and sends it to **Google Registry**. |
+| `create_docker_images`  | Build all *docker images*, gives them a tag (hash of a commit) and sends it to **Google Registry**. |
 | `deploy_to_k8s`         | Changes the tag (hash of the commit) of all *docker images*. Selects a project on a **GCP**, selects an existing **Google Kubernetes Cluster**. Deploys a cert manager and creates SSL certificate. Deploy **microservice application**.
 
 
