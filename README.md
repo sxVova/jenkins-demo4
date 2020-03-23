@@ -23,13 +23,21 @@ in the manifest file. This path should be "hostname"/"project-id"/"image":"${GIT
 
 ## Requirements
 1. [google-cloud-sdk](https://cloud.google.com/sdk/docs/downloads-apt-get)   
-1. kubectl  `sudo apt install kubectl -y`
-1. nodejs   `curl -sL https://deb.nodesource.com/setup_10.x | bash && sudo apt install nodejs -y`
-1. eslint   `npm i -g eslint`
+1. kubectl  
+`sudo apt install kubectl -y`
+1. nodejs   
+`curl -sL https://deb.nodesource.com/setup_10.x | bash && sudo apt install nodejs -y`
+1. eslint   
+`npm i -g eslint`
 1. [go](https://www.linode.com/docs/development/go/install-go-on-ubuntu/)
-1. python   `sudo apt install python -y`
-1. pip      `sudo apt install python-pip -y`
-1. flake8   `pip install flake8`
+1. python   
+`sudo apt install python -y`
+1. pip      
+`sudo apt install python-pip -y`
+1. flake8   
+`pip install flake8`
+1. Java linter  
+`wget https://github.com/checkstyle/checkstyle/releases/download/checkstyle-8.30/checkstyle-8.30-all.jar` 
 
 ## IAM
 In order to execute this module you must have a Service Account with the following roles:
