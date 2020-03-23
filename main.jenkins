@@ -102,14 +102,21 @@ pipeline {
                           gcloud config set project devops-259416
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
-
-                         # kubectl create namespace cert-manager
-                          kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.0/cert-manager-legacy.yaml
-                        #  kubectl create clusterrolebinding cluster-admin-binding \
-                         #   --clusterrole=cluster-admin \
-                         #   --user=$(gcloud config get-value core/account)
-
-                         # kubectl create secret generic k8s-service-account --from-file=/key.json -n cert-manager
+                        '''
+                        catchError(buildResult: 'SUCCESS', stageResult: 'namespace cert-manager already exist'){
+                            sh 'kubectl create namespace cert-manager'
+                        }
+                        
+                        sh 'kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.0/cert-manager-legacy.yaml'
+                        
+                        catchError(buildResult: 'SUCCESS', stageResult: 'cluster-admin-binding already exist'){
+                            sh 'kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account'
+                        }
+                        
+                        catchError(buildResult: 'SUCCESS', stageResult: 'secret k8s-service-account already exist'){
+                            sh 'kubectl create secret generic k8s-service-account --from-file=/key.json -n cert-manager'
+                        }
+                          sh '''
                           sleep 30
                           kubectl apply -f ./cert.yaml
 
