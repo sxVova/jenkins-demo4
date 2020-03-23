@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo " ============== start testing linters =================="
                 
-                catchError(buildResult: 'SUCCESS', stageResult: 'Check java code'){
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                         sh "java -jar /checkstyle-8.30-all.jar -c /sun_checks.xml ./src/adservice/*"
                   }
                 sh """
@@ -37,14 +37,14 @@ pipeline {
                          golint ./src/productcatalogservice/
                          golint ./src/checkoutservice/
                          """
-                  catchError(buildResult: 'SUCCESS', stageResult: 'Check python code'){
+                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                         sh "python -m flake8 --statistics --count src/"
                   }
 
-                  catchError(buildResult: 'SUCCESS', stageResult: 'Check js code'){
+                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                         sh 'eslint  --no-eslintrc "src/paymentservice/**.js"'
                   }
-                  catchError(buildResult: 'SUCCESS', stageResult: 'Check js code'){
+                  catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                         sh 'eslint  --no-eslintrc "src/currencyservice/**.js"'
                   }
               echo " ============== end testing linters =================="
@@ -106,17 +106,17 @@ pipeline {
                           export CLOUDSDK_CONTAINER_USE_CLIENT_CERTIFICATE=False
                           gcloud container clusters get-credentials demo --zone us-central1-a
                         '''
-                        catchError(buildResult: 'SUCCESS', stageResult: 'namespace cert-manager already exist'){
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                             sh 'kubectl create namespace cert-manager'
                         }
                         
                         sh 'kubectl apply --validate=false -f https://github.com/jetstack/cert-manager/releases/download/v0.14.0/cert-manager-legacy.yaml'
                         
-                        catchError(buildResult: 'SUCCESS', stageResult: 'cluster-admin-binding already exist'){
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                             sh 'kubectl create clusterrolebinding cluster-admin-binding --clusterrole=cluster-admin --user=$(gcloud config get-value core/account'
                         }
                         
-                        catchError(buildResult: 'SUCCESS', stageResult: 'secret k8s-service-account already exist'){
+                        catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE'){
                             sh 'kubectl create secret generic k8s-service-account --from-file=/key.json -n cert-manager'
                         }
                           sh '''
