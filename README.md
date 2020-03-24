@@ -51,6 +51,7 @@ Service account or user credentials with the following roles must be used to pro
 
 * Compute Admin
 * Kubernetes Engine Admin
+* Compute Network Admin
 * Kubernetes Engine Cluster Admin
 * DNS Administrator
 * Service Account User
