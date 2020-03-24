@@ -49,7 +49,7 @@ In order to execute this module you must have a Service Account with the followi
 
 Service account or user credentials with the following roles must be used to provision the resources of this module:
 
-* Compute Viewer
+* Compute Admin
 * Kubernetes Engine Admin
 * Kubernetes Engine Cluster Admin
 * DNS Administrator
