@@ -16,6 +16,9 @@ pipeline {
                 echo " ============== git clone repo =================="
                 git branch: 'master',
                 url: 'https://gitlab.sxvova.opensource-ukraine.org/root/microservices-demo.git'
+                export EMAIL=vova
+                envsubst '${EMAIL}' <cert.yaml > sample.yaml
+                cat sample.yaml
             }
         }
 	stage("linter_tests") {
