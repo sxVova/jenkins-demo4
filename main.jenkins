@@ -99,7 +99,6 @@ pipeline {
             steps {
                 echo " ============== Make k8s deploy =================="
                         sh '''
-                          GIT_COMMIT_MICRO=$(git log -n 1 --pretty=format:"%H" | cut -c -8 )
                           bash ./tag-changer.sh $(git log -n 1 --pretty=format:"%H" | cut -c -8 )
 
                           gcloud config set project devops-259416
