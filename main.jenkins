@@ -120,7 +120,7 @@ pipeline {
                             sh 'kubectl create secret generic k8s-service-account --from-file=/key.json -n cert-manager'
                         }
                           sh '''
-                          sleep 30
+                          kubectl wait --timeout=200s po --all --for=condition=Ready -n cert-manager
                           kubectl apply -f ./cert.yaml
 
                           kubectl apply -f ./release/kubernetes-manifests.yaml
