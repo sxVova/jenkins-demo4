@@ -16,11 +16,6 @@ pipeline {
                 echo " ============== git clone repo =================="
                 git branch: 'master',
                 url: 'https://gitlab.sxvova.opensource-ukraine.org/root/microservices-demo.git'
-                sh '''
-                export EMAIL=vova
-                envsubst '${EMAIL}' <cert.yaml > sample.yaml
-                cat sample.yaml
-                '''
             }
         }
 	stage("linter_tests") {
@@ -125,7 +120,12 @@ pipeline {
                         }
                           sh '''
                           kubectl wait --timeout=200s po --all --for=condition=Ready -n cert-manager
-                          kubectl apply -f ./cert.yaml
+                          export USER_EMAIL=volodymyr.skliar@nure.ua
+                          export PROJECT_ID=devops-259416
+                          export DNS_ZONE=sxvova
+                          export DNS_NAME=hipster-shop.sxvova.opensource-ukraine.org
+                          envsubst '${USER_EMAIL}, ${PROJECT_ID}, ${DNS_ZONE}, ${DNS_NAME}' <cert.yaml > certificate.yaml
+                          kubectl apply -f ./certificate.yaml
 
                           kubectl apply -f ./release/kubernetes-manifests.yaml
                           kubectl get po,svc,ing -o wide
