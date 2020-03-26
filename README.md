@@ -1,6 +1,6 @@
 # Graduation demo
 
-This Jenkinsfile contains a pipeline for CI/CD for a microservice application.
+This Jenkinsfile contains a pipeline for CI/CD for a microservice application.  
 If you want to repeat our demo completely, you will need repositories with [ansible](https://github.com/sxVova/ansible-demo4) and [terraform](https://github.com/DanJake/demo4_tf).
 
 ## Stages
