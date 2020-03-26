@@ -15,12 +15,12 @@ This Jenkinsfile contains a pipeline for CI/CD for a microservice application.
 | Dependence               | Description                                        |
 |--------------------------|----------------------------------------------------|
 |`static_global_IP_addres` | The global static ip address. It is necessary to change the line `kubernetes.io/ingress.global-static-ip-name: "ip-name"` in the file `microservices-demo/release/kubernetes-manifests.yaml` file.
-|`DNS_name`                | A-record that must be created and tied to a previously created new IP address. It is necessary to change  the line `- host:"dns-name"` in the file `microservices-demo/release/kubernetes-manifests.yaml` file and in the `cert.yaml` file. It is also necessary to change the variables `dnsZones`, `dnsNames`, `project` and `email` in the `microservices-demo/cert.yaml` file for the necessary variables. More [here](https://cert-manager.io/docs/configuration/acme/dns01/google/). |
+|`DNS_name`                | A-record that must be created and tied to a previously created new IP address. It is necessary to change  the line `- host:"dns-name"` in the file `microservices-demo/release/kubernetes-manifests.yaml` file.  |
 |`service_account`         | Service account for further work, the necessary roles will be described below.|
 
-It is also necessary to change the path to the **Google Cloud Storage** in the `main.jenkins` file and change them accordingly  
-in the manifest file. This path should be "hostname"/"project-id"/"image":"${GIT_COMMIT_MICRO} ". More [here](https://cloud.google.com/container-registry/docs/pushing-and-pulling).
-
+It is also necessary to change the path to the **Google Cloud Storage** in the `main.jenkins` file and change them accordingly in the manifest file.  
+This path should be "hostname"/"project-id"/"image":"${GIT_COMMIT_MICRO} ". More [here](https://cloud.google.com/container-registry/docs/pushing-and-pulling).  
+It is also necessary to change the variables `DNS_ZONE`, `DNS_NAME`, `PROJECT_ID` and `USER_EMAIL` in the  `main.jenkins` file for the necessary variables. More [here](https://cert-manager.io/docs/configuration/acme/dns01/google/).
 ## Requirements
 1. [google-cloud-sdk](https://cloud.google.com/sdk/docs/downloads-apt-get)  
 1. kubectl  
