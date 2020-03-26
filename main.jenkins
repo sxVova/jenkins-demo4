@@ -123,7 +123,7 @@ pipeline {
                           export USER_EMAIL=volodymyr.skliar@nure.ua
                           export PROJECT_ID=devops-259416
                           export DNS_ZONE=sxvova
-                          export DNS_NAME=hipster-shop.sxvova.opensource-ukraine.org
+                          export DNS_NAME=my-hipster.sxvova.opensource-ukraine.org
                           envsubst '${USER_EMAIL}, ${PROJECT_ID}, ${DNS_ZONE}, ${DNS_NAME}' <cert.yaml > certificate.yaml
                           kubectl apply -f ./certificate.yaml
 
